@@ -16,9 +16,9 @@ export default function Navbar() {
 
                 <div className='flex items-center gap-12'>
                     <ul className='flex font-medium items-center gap-5'>
-                        <li>Home</li>
-                        <li>Jobs</li>
-                        <li>Browse</li>
+                        <li className='hover:cursor-pointer'>Home</li>
+                        <li className='hover:cursor-pointer'>Jobs</li>
+                        <li className='hover:cursor-pointer'>Browse</li>
                     </ul>
 
                     {
