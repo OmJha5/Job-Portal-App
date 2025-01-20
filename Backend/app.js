@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import connectDB from "./utils/db.js";
 import userRouter from "./Router/User.js"
 import companyRouter from "./Router/Company.js"
+import jobRouter from "./Router/Job.js"
 dotenv.config({})
 
 const app = express()
@@ -25,6 +26,7 @@ app.use(cors(corsOptions))
 // Api's
 app.use("/api/v1/user" , userRouter);
 app.use("/api/v1/company" , companyRouter);
+app.use("/api/v1/job" , jobRouter);
 
 app.listen(port , () => {
     connectDB()
