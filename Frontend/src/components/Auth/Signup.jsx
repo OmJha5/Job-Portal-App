@@ -7,6 +7,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { USER_API_ENDPOINT } from '@/utils/endpoint'
 import { toast } from "sonner"
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoading } from '@/redux/authSlice'
+import { Loader2 } from 'lucide-react'
 
 export default function Signup() {
     let [input , setInput] = useState({
@@ -27,11 +30,14 @@ export default function Signup() {
     }
 
     let navigate = useNavigate();
+    let dispatch = useDispatch();
+    let loading = useSelector((state) => state.auth.loading);
     
     const submitHandler = async (e) => {
         e.preventDefault();
 
         try{
+            dispatch(setLoading(true));
             const formData = new FormData();
             formData.append("name" , input.name); 
             formData.append("email" , input.email); 
@@ -60,6 +66,9 @@ export default function Signup() {
         }
         catch(e){
             toast.error(e.response.data.message)
+        }
+        finally{
+            dispatch(setLoading(false));
         }
     }
 
@@ -116,7 +125,10 @@ export default function Signup() {
 
                     </div>
 
-                    <Button type="submit" className="w-full my-4">Signup</Button>
+                    {
+                        (!loading) ? <Button type="submit" className="w-full my-4">Signup</Button> : <Button type="submit" className="w-full my-4"><Loader2 className="animate-spin mr-2" /> Please wait</Button>
+                    }
+
                     <span className='text-sm'>Already have an account? <Link to="/login" className="text-blue-500">Login</Link></span>
 
 
