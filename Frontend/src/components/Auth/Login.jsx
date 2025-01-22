@@ -8,7 +8,7 @@ import axios from 'axios'
 import { toast } from 'sonner'
 import { USER_API_ENDPOINT } from '@/utils/endpoint'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLoading } from '@/redux/authSlice'
+import { setLoading, setUser } from '@/redux/authSlice'
 import { Loader2 } from 'lucide-react'
 
 export default function Login() {
@@ -39,6 +39,7 @@ export default function Login() {
             })
 
             if(res.data.success){
+                dispatch(setUser(res.data.user));
                 toast.success(res.data.message);
                 navigate("/");
             }
