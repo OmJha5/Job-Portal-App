@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 export default function Navbar() {
     
     const user = useSelector((state) => state.auth.user);
-    
+
     return (
         <div className='bg-white w-[100vw]'>
             <div className='flex items-center justify-between max-w-7xl mx-auto h-16 '>
@@ -53,7 +53,7 @@ export default function Navbar() {
                                     <div className='flex flex-col my-4 gap-y-4'>
                                         <div className='flex gap-5 items-center'>
                                             <User2/>
-                                            <Button variant="link" className="focus:outline-none focus:ring-0">View Profile</Button>
+                                            <Button variant="link" className="focus:outline-none focus:ring-0"><Link to="/profile" className='text-black'>View Profile</Link></Button>
                                         </div>
 
                                         <div className='flex gap-5 items-center'>
