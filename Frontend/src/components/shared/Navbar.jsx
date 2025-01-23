@@ -3,12 +3,32 @@ import {Popover , PopoverContent , PopoverTrigger,} from "@/components/ui/popove
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { LogOut, User2 } from 'lucide-react'
 import { Button } from '../ui/button'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { USER_API_ENDPOINT } from '@/utils/endpoint'
+import { setUser } from '@/redux/authSlice'
+import { toast } from 'sonner'
   
 export default function Navbar() {
     
     const user = useSelector((state) => state.auth.user);
+    let dispath = useDispatch();
+    let navigate = useNavigate();
+    
+    let handleLogout = async () => {
+        try{
+            let res = await axios.get(`${USER_API_ENDPOINT}/logout`);
+            if(res.data.success){
+                dispath(setUser(null));
+                navigate("/");
+                toast.success("Logged Out Successfully");
+            }
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
 
     return (
         <div className='bg-white w-[100vw]'>
@@ -34,23 +54,23 @@ export default function Navbar() {
                             <Popover>
                                 <PopoverTrigger>
                                     <Avatar className="cursor-pointer">
-                                        <AvatarImage src="https://github.com/shadcn.png" />
+                                        <AvatarImage src={(user?.profile?.profilePhoto) ? user.profile.profilePhoto : "https://github.com/shadcn.png"} />
                                     </Avatar>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-80">
                                     
                                     <div className='flex gap-10 items-center'>
                                         <Avatar className="cursor-pointer">
-                                            <AvatarImage src="https://github.com/shadcn.png" />
+                                            <AvatarImage src={(user?.profile?.profilePhoto) ? user.profile.profilePhoto : "https://github.com/shadcn.png"} />
                                         </Avatar>
 
                                         <div>
-                                            <h4 className='font-medium'>Job Portal</h4>
-                                            <p className='text-sm text-muted-foreground '>Lorem ipsum, dolor sit.</p>
+                                            <h4 className='font-medium'>{user.name}</h4>
+                                            <p className='text-sm text-muted-foreground '>{user.profile.bio}</p>
                                         </div>
                                     </div>
 
-                                    <div className='flex flex-col my-4 gap-y-4'>
+                                    <div className='flex flex-col mt-3 gap-y-2'>
                                         <div className='flex gap-5 items-center'>
                                             <User2/>
                                             <Button variant="link" className="focus:outline-none focus:ring-0"><Link to="/profile" className='text-black'>View Profile</Link></Button>
@@ -58,7 +78,7 @@ export default function Navbar() {
 
                                         <div className='flex gap-5 items-center'>
                                             <LogOut/>
-                                            <Button variant="link">Logout</Button>
+                                            <Button variant="link" onClick={handleLogout}>Logout</Button>
                                         </div>
                                     </div>
 

@@ -22,9 +22,16 @@ export let register = async (req , res) => {
 
         const hashedPassword = await bcrypt.hash(password , 10)
 
-        await User.create({
+        const newUser = await User.create({
             name , email , phoneNumber , password : hashedPassword , role,
         })
+        
+        let file = req.file?.path;
+        if(file != undefined){
+            newUser.profile.profilePhoto = file;
+        }
+
+        await newUser.save();
 
         return res.status(200).json({
             message : "Account Created Successfully!",

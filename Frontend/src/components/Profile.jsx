@@ -21,7 +21,7 @@ export default function Profile() {
         <div className='flex justify-between'>
           <div>
             <Avatar className=''>
-              <AvatarImage className='w-[5rem] rounded-full' src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg" alt='Om'></AvatarImage>
+              <AvatarImage className='w-[5rem] rounded-full' src={(user?.profile?.profilePhoto) ? user.profile.profilePhoto : "https://github.com/shadcn.png"} alt='Om'></AvatarImage>
             </Avatar>
 
             <h1 className='font-bold text-lg'>{user?.name}</h1>

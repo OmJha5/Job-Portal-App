@@ -13,7 +13,7 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
       folder: 'JobPortal_dev',
-      allowedFormats : ["pdf"],
+      allowedFormats : ["pdf" , "jpeg" , "jpg" , "png"],
     },
 });
 
