@@ -3,8 +3,12 @@ import React from 'react'
 import { Button } from './ui/button'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Badge } from "@/components/ui/badge"
+import { useNavigate } from 'react-router-dom'
 
 export default function Job() {
+    let navigate = useNavigate();
+    let jobId = "dkjdfdfjd";
+    
   return (
     <div className='p-5 rounded-md shadow-xl border border-gray-100'>
         <div className="flex justify-between">
@@ -37,7 +41,7 @@ export default function Job() {
         </div>
 
         <div className='flex gap-4 my-3'>
-            <Button variant="outline">Details</Button>
+            <Button variant="outline" onClick={() => navigate(`/jobs/description/${jobId}`)}>Details</Button>
             <Button className="bg-[#7209b7]">Save For Later</Button>
         </div>
 
