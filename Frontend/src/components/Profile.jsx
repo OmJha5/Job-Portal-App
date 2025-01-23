@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from './shared/Navbar'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Contact, Mail, Pen } from 'lucide-react'
 import { Button } from './ui/button'
 import { Badge } from "@/components/ui/badge"
 import AppliedJobTable from './AppliedJobTable'
-
+import UpdateProfileDialogBox from './UpdateProfileDialogBox'
+import { useSelector } from 'react-redux'
 
 export default function Profile() {
-  let skills = ["Javascript" , "React" , "Nodejs" , "Express" , "MongoDB"]
-  let isResume = 1;
+  let [open , setOpen] = useState(false);
+  let user = useSelector((state) => state.auth.user);
 
   return (
     <div>
@@ -23,24 +24,24 @@ export default function Profile() {
               <AvatarImage className='w-[5rem] rounded-full' src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg" alt='Om'></AvatarImage>
             </Avatar>
 
-            <h1 className='font-bold text-lg'>Full Name</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, exercitationem!</p>
+            <h1 className='font-bold text-lg'>{user?.name}</h1>
+            <p>{user?.profile?.bio}</p>
           </div>
 
           <div className='mt-5'>
-            <Button variant="outline"><Pen /></Button>
+            <Button variant="outline" onClick={() => setOpen(true)}><Pen /></Button>
           </div>
         </div>
 
         <div className='my-8'>
           <div className='flex gap-3 my-4'>
             <Mail/>
-            <span>omjha003@gmail.com</span>
+            <span>{user?.email}</span>
           </div>
 
           <div className='flex gap-3 my-4'>
             <Contact/>
-            <span>8851814506</span>
+            <span>{user?.phoneNumber}</span>
           </div>
         </div>
 
@@ -49,8 +50,8 @@ export default function Profile() {
 
             <div className="flex gap-3 my-2">
                 { 
-                    skills.length == 0 ? "NA" : (
-                      skills.map((elm) => {
+                    user?.profile?.skills.length == 0 ? "NA" : (
+                      user?.profile?.skills.map((elm) => {
                           return <Badge>{elm}</Badge>
                           
                       })
@@ -63,7 +64,7 @@ export default function Profile() {
         <div className='my-5'>
             <h1 className="font-bold text-lg mb-2">Resume</h1>
             {
-                isResume ? <a href="https://youtube.com" target='_blank' className='hover:underline'>Om Kumar Jha</a> : NA
+                (user?.profile?.resume) ? <a href={`${user.profile.resume}`} target='_blank' className='hover:underline'>{user.profile.resumeOriginalName}</a> : <span>NA</span>
             }
         </div>
 
@@ -76,6 +77,9 @@ export default function Profile() {
 
 
       </div>
+      
+      <UpdateProfileDialogBox open={open} setOpen={setOpen} />
+      
 
     </div>
   )

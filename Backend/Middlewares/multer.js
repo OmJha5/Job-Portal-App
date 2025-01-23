@@ -1,4 +1,4 @@
 import multer from "multer";
 
-const storage = multer.memoryStorage();
+import {storage} from "../cloudConfig.js"
 export const singleUpload = multer({storage}).single("file");

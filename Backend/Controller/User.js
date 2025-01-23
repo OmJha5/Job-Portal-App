@@ -54,9 +54,7 @@ export let login = async (req , res) => {
             })
         }
 
-        console.log(user);
         let status = await bcrypt.compare(password , user.password)
-        console.log("Here we have---------------- " + status);
         if(!status){
             return res.status(400).json({
                 message : "Incorrect Email Or Password!",
@@ -113,7 +111,6 @@ export let logout = async (req , res) => {
 export let updateProfile = async(req , res) => {
     try{
         const {name , email , phoneNumber , bio , skills} = req.body
-        const file = req.file
 
         let skillsArray;
         if(skills) skillsArray = skills.split(",");
@@ -134,7 +131,8 @@ export let updateProfile = async(req , res) => {
         if(bio) user.profile.bio = bio
         if(skills) user.profile.skills = skillsArray
 
-        // Resume comes later here.
+        user.profile.resume = req?.file?.path;
+        user.profile.resumeOriginalName = req?.file?.originalname;
 
         await user.save();
 
@@ -147,8 +145,8 @@ export let updateProfile = async(req , res) => {
             profile : user.profile,
         }
 
-        return res.send(200).json({
-            message : "profile updated Successfully",
+        return res.status(200).json({
+            message : "Profile updated Successfully",
             user : user,
             success : true,
         })
