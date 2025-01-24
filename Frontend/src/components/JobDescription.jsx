@@ -1,18 +1,35 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { JOB_API_ENDPOINT } from '@/utils/endpoint'
+import { Application_API_ENDPOINT, JOB_API_ENDPOINT } from '@/utils/endpoint'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSingleJob } from '@/redux/jobSlice'
+import { toast } from 'sonner'
 
 export default function JobDescription() {
-    let isApplied = false
     let params = useParams()
     let jobId = params.id
     let singleJob = useSelector((state) => state.job.singleJob)
     let dispatch = useDispatch();
+    let user = useSelector((state) => state.auth.user);
+    let temp = singleJob?.applications?.some((application) => application?.applicant == user?._id);
+    let [isApplied , setIsApplied] = useState(temp == true)
+    
+    let applyThisJob = async () => {
+        try{
+            let res = await axios.get(`${Application_API_ENDPOINT}/apply/${jobId}` , {withCredentials : true});
+            if(res.data.success){
+                dispatch(setSingleJob(res.data.job));
+                toast.success("Job Applied Successfully!");
+                setIsApplied(true);
+            }
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
 
     useEffect(() => {
         const fetchSingleJob = async() => {
@@ -20,6 +37,9 @@ export default function JobDescription() {
                 let res = await axios.get(`${JOB_API_ENDPOINT}/get/${jobId}` , {withCredentials : true});
                 if(res.data.success){
                     dispatch(setSingleJob(res.data.job));
+                    let temp1 = singleJob?.applications?.some((application) => application?.applicant == user?._id);
+                    if(temp1 === true) setIsApplied(true);
+                    else setIsApplied(false);
                 }
             }
             catch(e){
@@ -28,7 +48,7 @@ export default function JobDescription() {
         }
 
         fetchSingleJob();
-    } , [])
+    } , [jobId])
 
     return (
         <div className='w-[100vw]'>
@@ -44,7 +64,7 @@ export default function JobDescription() {
                     </div>
 
                     <div>
-                        <Button disabled={isApplied} className="bg-blue-500 hover:bg-blue-600">Apply Now</Button>
+                        <Button onClick={(isApplied) ? null : applyThisJob} disabled={isApplied} className="bg-blue-500 hover:bg-blue-600">Apply Now</Button>
                     </div>
                 </div>
 
