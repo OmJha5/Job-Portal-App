@@ -1,8 +1,9 @@
 import React from 'react'
 import LatestJobCards from './LatestJobCards';
+import { useSelector } from 'react-redux';
 
 export default function LatestJobs() {
-    let randomJobs = [1, 2, 3, 4, 5, 6, 7, 8];
+    let allJobs = useSelector((state) => state.job.allJobs);
 
     return (
         <div>
@@ -11,9 +12,9 @@ export default function LatestJobs() {
             {/* Multiple Job Cards will get displayed below */}
             <div className='grid grid-cols-3 gap-10 justify-items-center'>
                 {
-                    randomJobs.slice(0, 6).map((job , ind) => {
-                        return <LatestJobCards key={ind} />
-                    })
+                    allJobs.length == 0 ? <span>Sorry No Jobs For Now!</span> :(allJobs.slice(0, 6).map((job) => {
+                        return <LatestJobCards key={job._id} job={job} />
+                    })) 
                 }
             </div>
 

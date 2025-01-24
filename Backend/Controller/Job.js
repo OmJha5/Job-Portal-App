@@ -9,7 +9,7 @@ export let postJob = async (req , res) => {
         if(!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId){
             return res.status(400).json({
                 message : "Something is Missing",
-                sucess : false
+                success : false
             })
         }
 
@@ -59,7 +59,8 @@ export let getAllJobs = async (req , res) => {
         if(jobs.length == 0){
             return res.status(404).json({
                 message : "Jobs not found",
-                success : false
+                jobs : [],
+                success : true
             })
         }
         
