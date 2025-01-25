@@ -1,16 +1,17 @@
 import Company from "../models/Company.js"
 
-export let registerCompany = async (req , res) => {
+export let createCompany = async(req , res) => {
     try{
-        const {companyName} = req.body;
-        if(!companyName){
+        const {name , description , website , location} = req.body;
+        const file = req.file;
+        if(!name || !description || !website  || !location){
             return res.status(400).json({
-                message : "Company Name is Required",
-                success : false
+                message : "Please enter the required fields",
+                success : false,
             })
         }
 
-        let company = await Company.findOne({name : companyName});
+        let company = await Company.findOne({name : name});
         if(company){
             return res.status(400).json({
                 message : "You Can't register same company",
@@ -19,14 +20,13 @@ export let registerCompany = async (req , res) => {
         }
 
         company = await Company.create({
-            name : companyName,
-            userId : req.id
+            name , description , website , location , logo : file?.path , userId : req.id
         })
 
-        return res.status(201).json({
-            message : "Company Registered Sucessfully",
-            company : company,
-            success : true
+        return res.status(200).json({
+            message : "Company Created Successfully!",
+            company,
+            success : true,
         })
     }
     catch(e){
@@ -34,7 +34,7 @@ export let registerCompany = async (req , res) => {
     }
 }
 
-export let getCompany = async(req , res) => {
+export let getAllByCurr = async(req , res) => {
     try{
         const userId = req.id;
         const companies = await Company.find({userId}); // Woh saari company jisko yeh user ne create kara hai 
@@ -47,9 +47,23 @@ export let getCompany = async(req , res) => {
 
         return res.status(200).json({
             companies,
+            success : true,
         })
 
         
+    }
+    catch(e){
+        console.log(e);
+    }
+}
+
+export let getAll = async (req , res) => {
+    try{
+        let companies = await Company.find({});
+        return res.status(200).json({
+            companies , 
+            success : true,
+        })
     }
     catch(e){
         console.log(e);
@@ -81,8 +95,18 @@ export let updateCompany = async (req , res) => {
     try{
         const {name , description , website , location} = req.body;
         const file = req.file;
+        let currCompany = await Company.findById(req.params.id);
+        let owner = currCompany.userId;
+        let currUser = req.id;
 
-        const updateData = {name , description , website , location}
+        if(owner.toString() != currUser.toString()) {
+            return res.status(404).json({
+                message : "You can't edit this company",
+                success : false,
+            })
+        }
+
+        const updateData = {name , description , website , location , logo : file?.path}
         const company = await Company.findByIdAndUpdate(req.params.id ,updateData , {new : true} );
 
         if(!company){
