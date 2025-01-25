@@ -9,6 +9,6 @@ router.route("/createCompany").post(isAuthenticated , singleUpload , createCompa
 router.route("/getCurr").get(isAuthenticated , getAllByCurr)
 router.route("/get").get(isAuthenticated , getAll);
 router.route("/get/:id").get(isAuthenticated , getCompanyById)
-router.route("/update/:id").put(isAuthenticated , updateCompany)
+router.route("/update/:id").post(isAuthenticated, singleUpload , updateCompany)
 
 export default router;

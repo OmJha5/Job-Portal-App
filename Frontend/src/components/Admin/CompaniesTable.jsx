@@ -12,9 +12,11 @@ import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 import { Edit2, MoreHorizontal, MoveHorizontal } from 'lucide-react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 export default function CompaniesTable() {
     let allCompanies = useSelector((state) => state.company.allCompanies);
+    let navigate = useNavigate();
 
     return (
         <div>
@@ -34,30 +36,31 @@ export default function CompaniesTable() {
                             <TableBody>
                                 {
                                     allCompanies.map((company) => {
-                                        return <>
-                                            <TableRow>
-                                                <TableCell className="font-medium text-left">
-                                                    <Avatar className=''>
-                                                        <AvatarImage className='w-[50px] h-[50px] rounded-full' src={`${company.logo}`} alt='Om'></AvatarImage>
-                                                    </Avatar>
-                                                </TableCell>
-                                                <TableCell className="text-left">{company.name}</TableCell>
-                                                <TableCell className="text-left">{company.createdAt.split("T")[0]}</TableCell>
-                                                <TableCell className="text-right">
-                                                    <Popover>
-                                                        <PopoverTrigger>
-                                                            <MoreHorizontal />
-                                                        </PopoverTrigger>
-                                                        <PopoverContent className='my-4'>
-                                                            <div className="flex gap-2 cursor-pointer">
-                                                                <Edit2 />
-                                                                <span>Edit</span>
-                                                            </div>
-                                                        </PopoverContent>
-                                                    </Popover>
-                                                </TableCell>
-                                            </TableRow>
-                                        </>
+                                        return (
+                                        <TableRow key={company?._id}>
+                                            <TableCell className="font-medium text-left">
+                                                <Avatar className=''>
+                                                    <AvatarImage className='w-[50px] h-[50px] rounded-full' src={`${company?.logo}`} alt='Om'></AvatarImage>
+                                                </Avatar>
+                                            </TableCell>
+                                            <TableCell className="text-left">{company?.name}</TableCell>
+                                            <TableCell className="text-left">{company?.createdAt.split("T")[0]}</TableCell>
+                                            <TableCell className="text-right">
+                                                <Popover>
+                                                    <PopoverTrigger>
+                                                        <MoreHorizontal />
+                                                    </PopoverTrigger>
+                                                    <PopoverContent>
+                                                        <div className="flex gap-2 cursor-pointer" onClick={() => navigate(`/admin/companies/update/${company?._id}`)}>
+                                                            <Edit2 />
+                                                            <span>Edit</span>
+                                                        </div>
+                                                    </PopoverContent>
+                                                </Popover>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                    
                                     })
                                 }
                             </TableBody>
