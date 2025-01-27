@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Table,
     TableBody,
@@ -10,18 +10,35 @@ import {
 } from "@/components/ui/table"
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
-import { Edit2, MoreHorizontal, MoveHorizontal } from 'lucide-react'
-import { useSelector } from 'react-redux'
+import { Edit2, MoreHorizontal } from 'lucide-react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { setAllCompanies } from '@/redux/companySlice'
 
 export default function CompaniesTable() {
     let allCompanies = useSelector((state) => state.company.allCompanies);
+    let [filterCompany , setFilterCompany] = useState(allCompanies);
     let navigate = useNavigate();
+    let textToFilterCompany = useSelector((state) => state.company.textToFilterCompany);
+    let dispatch = useDispatch();
+
+    useEffect(() => {
+        let filteredCompany = allCompanies.filter((company) => {
+            return company?.name?.toLowerCase().includes(textToFilterCompany.toLowerCase()) || textToFilterCompany == "";
+        })
+
+        setFilterCompany(filteredCompany);
+
+    } , [textToFilterCompany])
+
+    useEffect(() => {
+        setFilterCompany(allCompanies)
+    } , [allCompanies])
 
     return (
         <div>
             {
-                allCompanies.length == 0 ? <span>No Available Companies!</span> : (
+                filterCompany?.length == 0 ? <span>No Available Companies!</span> : (
                     <>
                         <Table>
                             <TableCaption>A list of your Recent Registered Companies</TableCaption>
@@ -35,7 +52,7 @@ export default function CompaniesTable() {
                             </TableHeader>
                             <TableBody>
                                 {
-                                    allCompanies.map((company) => {
+                                    filterCompany?.map((company) => {
                                         return (
                                         <TableRow key={company?._id}>
                                             <TableCell className="font-medium text-left">

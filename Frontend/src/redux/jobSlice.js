@@ -4,7 +4,9 @@ const jobSlice = createSlice({
     name : "job",
     initialState : {
         allJobs : [],
-        singleJob : null
+        singleJob : null,
+        allJobsByCurr : [],
+        textToFilterJob : "",
     },
     reducers : {
         setAllJobs(state , action){
@@ -12,9 +14,16 @@ const jobSlice = createSlice({
         },
         setSingleJob(state , action){
             state.singleJob = action.payload
+        },
+        setTextToFilterJob(state , action){
+            state.textToFilterJob = action.payload;
+        },
+        setAllJobsByCurr(state , action){
+            state.allJobsByCurr = action.payload;
         }
+
     }
 })
 
-export const {setAllJobs , setSingleJob} = jobSlice.actions;
+export const {setAllJobs , setSingleJob , setTextToFilterJob , setAllJobsByCurr} = jobSlice.actions;
 export default jobSlice.reducer;

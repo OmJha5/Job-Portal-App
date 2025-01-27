@@ -83,7 +83,7 @@ export default function UpdateCompany() {
 
             if(res.data.success){
                 let updatedCompany = res.data.company;
-                let temp = allCompanies.filter((company) => company.name != input.name)
+                let temp = allCompanies.filter((company) => company._id.toLowerCase() != companyId.toLowerCase())
                 let updatedCompanies = [...temp , updatedCompany];
                 dispatch(setAllCompanies(updatedCompanies)); // Update Redux state immutably
                 toast.success("Company Updated Successfully!");

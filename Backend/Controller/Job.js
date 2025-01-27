@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Job from "../models/Job.js";
 
 // Admin ke liye
@@ -103,14 +104,10 @@ export const getJobById = async(req , res) => {
 // Admin kitte job create kara abhi tak 
 export const getAdminJobs = async(req , res) => {
     try{
-        const adminId = req.id;
-        const jobs = await Job.find({created_by : adminId});
-        if(jobs.length == 0){
-            return res.status(404).json({
-                message : "Job Not Found",
-                success : false
-            })
-        }
+        let adminId = req.id;
+        const jobs = await Job.find({created_by : adminId}).populate({
+            path : "companyId",
+        });
 
         return res.status(200).json({jobs , success : true});
     }
