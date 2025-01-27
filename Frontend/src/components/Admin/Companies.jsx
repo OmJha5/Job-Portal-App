@@ -11,7 +11,6 @@ import axios from 'axios'
 
 export default function Companies() {
   let navigate = useNavigate();
-  let allCompanies = useSelector((state) => state.company.allCompanies);
   let dispatch = useDispatch();
   let [input , setInput] = useState("");
 

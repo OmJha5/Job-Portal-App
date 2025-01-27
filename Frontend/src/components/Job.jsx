@@ -25,7 +25,7 @@ export default function Job({job}) {
 
         <div className="flex items-center my-2 gap-4">
             <Avatar className=''>
-                    <AvatarImage className='w-[3rem] rounded-full' src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg" alt='Om'></AvatarImage>
+                    <AvatarImage className='w-[40px] h-[40px] rounded-full' src={job?.companyId?.logo} alt='Om'></AvatarImage>
             </Avatar>
 
             <div>

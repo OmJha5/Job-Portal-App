@@ -19,6 +19,7 @@ export default function JobsTable() {
     let textToFilterJob = useSelector((state) => state.job.textToFilterJob);
     let allJobsByCurr = useSelector((state) => state.job.allJobsByCurr);
     let [filteredJob, setFilteredJob] = useState(allJobsByCurr);
+    let navigate = useNavigate();
 
     useEffect(() => {
         setFilteredJob(allJobsByCurr); 
@@ -69,7 +70,7 @@ export default function JobsTable() {
                                                             <MoreHorizontal />
                                                         </PopoverTrigger>
                                                         <PopoverContent>
-                                                            <div className="flex gap-2 cursor-pointer" onClick={() => navigate(`/admin/companies/update/${job?._id}`)}>
+                                                            <div className="flex items-center gap-2 cursor-pointer p-1 shadow-lg" onClick={() => navigate(`/admin/companies/update/${job?._id}`)}>
                                                                 <Edit2 />
                                                                 <span>Edit</span>
                                                             </div>

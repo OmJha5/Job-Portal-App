@@ -34,7 +34,7 @@ export let postJob = async (req , res) => {
             created_by : userId,
         })
 
-        return res.status(201).json({
+        return res.status(200).json({
             message : "New Job Created Successfully!",
             job,
             success : true

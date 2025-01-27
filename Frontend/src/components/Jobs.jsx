@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import fetchAllJobs from '@/utils/fetchAllJobs';
 
 export default function Jobs() {
-    // const jobsArray = [1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10 , 11 , 12 , 13];
     const dispatch = useDispatch();
     const allJobs = useSelector((state) => state.job.allJobs)
 
