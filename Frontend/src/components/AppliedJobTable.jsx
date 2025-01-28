@@ -9,8 +9,12 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
+import { useSelector } from 'react-redux';
+import { Button } from './ui/button';
 
 export default function AppliedJobTable() {
+    let allApplicationOfAUser = useSelector((state) => state.application.allApplicationOfAUser);
+
     return (
         <div>
             <Table>
@@ -24,12 +28,20 @@ export default function AppliedJobTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow>
-                        <TableCell className="font-medium text-left">17/03/2025</TableCell>
-                        <TableCell className="text-left">Software Engineer</TableCell>
-                        <TableCell className="text-left">Google</TableCell>
-                        <TableCell className="text-right"><Badge>Selected</Badge></TableCell>
-                    </TableRow>
+                    {
+                        allApplicationOfAUser.map((application) => {
+                            return <TableRow key={application._id}>
+                                     <TableCell className="text-left">{application?.createdAt?.split("T")[0]}</TableCell>
+                                     <TableCell className="text-left">{application?.job?.title}</TableCell>
+                                     <TableCell className="text-left">{application?.job?.companyId?.name}</TableCell>
+                                     <TableCell className="text-right">
+                                        {
+                                            (application.status == "pending") ? <Badge className="bg-gray-500">Pending</Badge> : (application.status == "rejected") ? <Badge className="bg-red-400">Rejected</Badge> : <Badge className="bg-green-400">Accepted</Badge>
+                                        }
+                                     </TableCell>
+                            </TableRow>
+                        })
+                    }
                 </TableBody>
             </Table>
 

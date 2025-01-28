@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './shared/Navbar'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Contact, Mail, Pen } from 'lucide-react'
@@ -6,17 +6,40 @@ import { Button } from './ui/button'
 import { Badge } from "@/components/ui/badge"
 import AppliedJobTable from './AppliedJobTable'
 import UpdateProfileDialogBox from './UpdateProfileDialogBox'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { Application_API_ENDPOINT } from '@/utils/endpoint'
+import { setAllApplicationOfAUser } from '@/redux/applicationSlice'
 
 export default function Profile() {
   let [open , setOpen] = useState(false);
   let user = useSelector((state) => state.auth.user);
+  let dispatch = useDispatch();
+
+  useEffect(() => {
+    let getAllApplicationsByCurrUser = async() => {
+        
+        try{
+            let res = await axios.get(`${Application_API_ENDPOINT}/get` , {withCredentials : true});
+            console.log(res);
+
+            if(res.data.success){
+                dispatch(setAllApplicationOfAUser(res.data.application));
+            }
+        }
+        catch(e){
+          console.log(e);
+        }
+    }
+
+    getAllApplicationsByCurrUser();
+  } , [])
 
   return (
     <div>
       <Navbar />
 
-      <div className="max-w-7xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8">
+      <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8">
 
         <div className='flex justify-between'>
           <div>
