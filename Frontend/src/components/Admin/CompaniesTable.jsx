@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table"
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
-import { Edit2, MoreHorizontal } from 'lucide-react'
+import { Edit, Edit2, MoreHorizontal } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setAllCompanies } from '@/redux/companySlice'
@@ -65,10 +65,10 @@ export default function CompaniesTable() {
                                             <TableCell className="text-right">
                                                 <Popover>
                                                     <PopoverTrigger>
-                                                        <MoreHorizontal />
+                                                        <MoreHorizontal/>
                                                     </PopoverTrigger>
                                                     <PopoverContent>
-                                                        <div className="flex gap-2 cursor-pointer" onClick={() => navigate(`/admin/companies/update/${company?._id}`)}>
+                                                        <div className="flex gap-2 cursor-pointer p-3 shadow-lg rounded-md justify-center items-center relative z-50 bg-white" onClick={() => navigate(`/admin/companies/update/${company?._id}`)}>
                                                             <Edit2 />
                                                             <span>Edit</span>
                                                         </div>

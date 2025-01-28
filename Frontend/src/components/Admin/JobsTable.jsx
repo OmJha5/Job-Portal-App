@@ -70,7 +70,7 @@ export default function JobsTable() {
                                                             <MoreHorizontal />
                                                         </PopoverTrigger>
                                                         <PopoverContent>
-                                                            <div className="flex items-center gap-2 cursor-pointer p-1 shadow-lg" onClick={() => navigate(`/admin/companies/update/${job?._id}`)}>
+                                                            <div className="flex gap-2 cursor-pointer p-3 shadow-lg rounded-md justify-center items-center relative z-50 bg-white" onClick={() => navigate(`/admin/companies/update/${job?._id}`)}>
                                                                 <Edit2 />
                                                                 <span>Edit</span>
                                                             </div>
