@@ -52,7 +52,7 @@ export const applyJob = async (req , res) => {
     }
 }
 
-// Eak user ke jitte bhi job applications mai apply kara hai 
+// Eak user ne jitte bhi job applications mai apply kara hai 
 export const getAppliedJobs = async(req , res) => {
     try{
         const userId = req.id;
@@ -82,7 +82,7 @@ export const getAppliedJobs = async(req , res) => {
     }
 }
 
-// Kitte user ke eak specific job pe apply kara hai 
+// Kitte user ne eak specific job pe apply kara hai 
 export const getApplicants = async(req , res) => {
     try{
         const jobId = req.params.id;
@@ -113,8 +113,8 @@ export const getApplicants = async(req , res) => {
 
 export const updateStatus = async(req , res) => {
     try{
-        const {status} = req.body;
-        const applicationId = req.params.id;
+        let {status} = req.body;
+        let applicationId = req.params.id;
         
         if(!status) {
             return res.status(404).json({
@@ -125,7 +125,7 @@ export const updateStatus = async(req , res) => {
 
         status = status.toLowerCase();
 
-        if(status != pending && status != accepted && status != rejected){
+        if(status != "pending" && status != "accepted" && status != "rejected"){
             return res.status(404).json({
                 message : "Enter Valid Status for the application",
                 success : false
@@ -133,7 +133,7 @@ export const updateStatus = async(req , res) => {
         }
 
         // Find the application by application id
-        const application = await Application.findById(applicationId)
+        let application = await Application.findById(applicationId)
         if(!application) {
             return res.status(404).json({
                 message : "Application not found",

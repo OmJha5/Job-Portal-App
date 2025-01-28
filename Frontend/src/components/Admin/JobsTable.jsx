@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table"
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
-import { Edit2, MoreHorizontal } from 'lucide-react'
+import { Edit2, Eye, MoreHorizontal } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -70,9 +70,15 @@ export default function JobsTable() {
                                                             <MoreHorizontal />
                                                         </PopoverTrigger>
                                                         <PopoverContent>
-                                                            <div className="flex gap-2 cursor-pointer p-3 shadow-lg rounded-md justify-center items-center relative z-50 bg-white" onClick={() => navigate(`/admin/companies/update/${job?._id}`)}>
-                                                                <Edit2 />
-                                                                <span>Edit</span>
+                                                            <div className="flex flex-col gap-2 p-3 shadow-lg rounded-md  relative z-50 bg-white">
+                                                                    <div className='flex gap-2 w-full cursor-pointer' onClick={() => navigate(`/admin/jobs/edit/${job?._id}`)}>
+                                                                        <Edit2 />
+                                                                        <span>Edit</span>
+                                                                    </div>
+                                                                    <div className='flex gap-2 w-full cursor-pointer' onClick={() => navigate(`/admin/jobs/applicants/${job?._id}`)}>
+                                                                        <Eye/>
+                                                                        <span>Applicant</span>
+                                                                    </div>
                                                             </div>
                                                         </PopoverContent>
                                                     </Popover>
