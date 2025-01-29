@@ -30,24 +30,24 @@ export default function Job({job}) {
 
             <div>
                 <h1 className='font-normal text-lg'>{job?.companyId?.name}</h1>
-                <p className='text-sm text-gray-600'>{job.location}</p>
+                <p className='text-sm text-gray-600'>{job?.location}</p>
             </div>
 
         </div>
 
         <div className='my-2'>
-            <h1 className='font-bold text-lg my-2'>{job.title}</h1>
-            <p className='text-sm text-gray-600'>{job.description}</p>
+            <h1 className='font-bold text-lg my-2'>{job?.title}</h1>
+            <p className='text-sm text-gray-600'>{job?.description}</p>
         </div>
 
         <div className='flex gap-3 my-4'>
-            <Badge className={"text-blue-700 font-bold"} variant="outline">{job.position} Positions</Badge>
-            <Badge className={"text-[#F83002] font-bold"} variant="outline">{job.jobType}</Badge>
-            <Badge className={"text-[#7209b7] font-bold"} variant="outline">{job.salary} LPA</Badge>
+            <Badge className={"text-blue-700 font-bold"} variant="outline">{job?.position} Positions</Badge>
+            <Badge className={"text-[#F83002] font-bold"} variant="outline">{job?.jobType}</Badge>
+            <Badge className={"text-[#7209b7] font-bold"} variant="outline">{job?.salary} LPA</Badge>
         </div>
 
         <div className='flex gap-4 my-3'>
-            <Button variant="outline" onClick={() => navigate(`/jobs/description/${job._id}`)}>Details</Button>
+            <Button variant="outline" onClick={() => navigate(`/jobs/description/${job?._id}`)}>Details</Button>
             <Button className="bg-[#7209b7]">Save For Later</Button>
         </div>
 

@@ -60,14 +60,6 @@ export let getAllJobs = async (req , res) => {
             path: "companyId",
         });
         
-        if(jobs.length == 0){
-            return res.status(404).json({
-                message : "Jobs not found",
-                jobs : [],
-                success : true
-            })
-        }
-        
         return res.status(200).json({
             jobs,
             success : true

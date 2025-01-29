@@ -7,6 +7,9 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Button } from './ui/button'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setSearchQuery } from '@/redux/jobSlice'
 
 
 export default function CategoryCarousel() {
@@ -17,6 +20,13 @@ export default function CategoryCarousel() {
         "Graphic Designer",
         "FullStack Developer"
     ]
+    let navigate = useNavigate();
+    let dispatch = useDispatch();
+
+    let setQueryStore = (c) => {
+        dispatch(setSearchQuery(c))
+        navigate("/browse")
+    }
 
     return (
         <div>
@@ -26,7 +36,7 @@ export default function CategoryCarousel() {
                     {
                         category.map((c , ind) => {
                             return <CarouselItem className="md:basis-1/2 lg:basis-1/3 flex items-center" key={ind}>
-                                <Button variant="outline" className="rounded-full">{c}</Button>
+                                <Button variant="outline" className="rounded-full" onClick={() => setQueryStore(c)}>{c}</Button>
                             </CarouselItem>
                         })
                     }

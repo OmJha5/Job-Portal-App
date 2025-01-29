@@ -10,7 +10,7 @@ export default function Jobs() {
     const allJobs = useSelector((state) => state.job.allJobs)
 
     useEffect(() => {
-        fetchAllJobs(dispatch); 
+        fetchAllJobs(dispatch , ""); 
     }, []); 
 
   return (
