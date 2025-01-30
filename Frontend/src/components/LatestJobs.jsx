@@ -19,7 +19,7 @@ export default function LatestJobs() {
             {/* Multiple Job Cards will get displayed below */}
             <div className='grid grid-cols-4 gap-10 justify-items-center'>
                 {
-                    allJobs.length == 0 ? <span>Sorry No Jobs For Now!</span> :(allJobs.slice(0, 6).map((job) => {
+                    allJobs?.length == 0 ? <span>Sorry No Jobs For Now!</span> :(allJobs?.slice(0, 6)?.map((job) => {
                         return <LatestJobCards key={job._id} job={job} />
                     })) 
                 }
