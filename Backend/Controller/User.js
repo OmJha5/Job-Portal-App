@@ -92,7 +92,7 @@ export let login = async (req , res) => {
             profile : user.profile,
         }
         
-        return res.status(200).cookie("token" , token , {maxAge : 1 * 24 * 60 * 60 * 1000 , httpsOnly:true , sameSite:"strict"}).json({
+        return res.status(200).cookie("token" , token , {maxAge : 1 * 24 * 60 * 60 * 1000 , httpOnly:true , sameSite:"strict"}).json({
             message : `Welcome Back ${user.name}`,
             user: user,
             success : true
@@ -105,7 +105,7 @@ export let login = async (req , res) => {
 
 export let logout = async (req , res) => {
     try{
-        res.status(200).cookie("token" , "" , {maxAge:0}).json({
+        return res.status(200).cookie("token" , "" , {maxAge:0 , httpOnly : true , sameSite : "strict"}).json({
             message : "Logged Out Successfully!",
             success : true
         })

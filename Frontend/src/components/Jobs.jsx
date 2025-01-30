@@ -7,6 +7,7 @@ import axios from "axios";
 import { setAllJobs } from "@/redux/jobSlice";
 import { JOB_API_ENDPOINT } from '@/utils/endpoint';
 import { Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Jobs() {
     const dispatch = useDispatch();
@@ -52,7 +53,14 @@ export default function Jobs() {
                         {   
                             allJobs.length == 0 ? <span>Jobs Not found</span> :(
                                 allJobs.map((job) => {
-                                    return <Job key={job._id} job={job} />
+                                    return <motion.div
+                                            initial={{opacity : 0 , x : 100}}
+                                            animate={{opacity : 1 , x : 0}}
+                                            transition={{duration : 0.3}}
+                                            key={job._id + allJobs.length}>
+                                                
+                                                <Job job={job} />
+                                            </motion.div>
                                 })
                             )
                         }

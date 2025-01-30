@@ -18,7 +18,7 @@ export default function Navbar() {
 
     let handleLogout = async () => {
         try {
-            let res = await axios.get(`${USER_API_ENDPOINT}/logout`);
+            let res = await axios.get(`${USER_API_ENDPOINT}/logout` , {withCredentials : true});
             if (res.data.success) {
                 dispath(setUser(null));
                 navigate("/");
